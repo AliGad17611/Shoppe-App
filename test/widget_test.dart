@@ -7,13 +7,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shoppe_app/core/routes/app_routes.dart';
 
-import 'package:shoppe_app/main.dart';
+import 'package:shoppe_app/shoppe_app.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(ShoppeApp(appRoutes: AppRoutes()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
