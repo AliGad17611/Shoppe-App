@@ -3,9 +3,10 @@ class AppStrings {
   static const String appName = 'Shoppe App';
 
   // Welcome Screen
-  static const String welcomeTitle = 'Welcome to Shoppe';
-  static const String welcomeSubtitle = 'Your one-stop shop for everything';
-  static const String getStarted = 'Get Started';
+  static const String welcomeTitle = 'Look Good, Feel Good';
+  static const String welcomeSubtitle = 'Create your individual & unique style and look amazing everyday.';
+  static const String men = 'Men';
+  static const String women = 'Women';
   static const String skip = 'Skip';
 
   // Errors

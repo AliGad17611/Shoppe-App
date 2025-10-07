@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shoppe_app/core/routes/app_routes.dart';
-import 'package:shoppe_app/core/theme/app_theme.dart';
+
+import 'package:shoppe_app/core/theme/light_theme.dart';
 
 class ShoppeApp extends StatelessWidget {
   const ShoppeApp({super.key, required this.appRoutes});
@@ -19,7 +20,7 @@ class ShoppeApp extends StatelessWidget {
         return MaterialApp(
           title: 'Shoppe App',
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
+          theme: LightTheme.getLightTheme,
           onGenerateRoute: appRoutes.generateRoute,
         );
       },

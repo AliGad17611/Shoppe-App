@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:shoppe_app/core/network/network_info.dart';
+import 'package:shoppe_app/core/theme/cubit/theme_cubit.dart';
 import 'package:shoppe_app/features/welcome/data/datasources/welcome_local_datasource.dart';
 import 'package:shoppe_app/features/welcome/data/repositories/welcome_repository_impl.dart';
 import 'package:shoppe_app/features/welcome/domain/repositories/welcome_repository.dart';
@@ -10,6 +11,9 @@ import 'package:shoppe_app/features/welcome/presentation/cubit/welcome_cubit.dar
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  // Core - Theme
+  sl.registerLazySingleton(() => ThemeCubit());
+
   // Features - Welcome
   // Cubit
   sl.registerFactory(
