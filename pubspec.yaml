@@ -33,15 +33,16 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.6
+  flutter_bloc: ^9.1.1
   flutter_native_splash: ^2.4.6
   flutter_screenutil: ^5.9.3
+  font_awesome_flutter: ^10.10.0
   get_it: ^8.0.2
   google_fonts: ^6.3.2
-  shared_preferences: ^2.3.4
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
 
@@ -80,15 +81,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-flutter_native_splash:
-  color: "#9775FA"
-  image: assets/splash.png
-
-  # مهم لـ Android 12+
-  android_12:
-    image: assets/splash.png
-    color: "#9775FA"
-
-  android: true
-  ios: true
-  web: false

@@ -16,16 +16,24 @@ class LightTheme {
       headlineMedium: AppTextStyles.font25W600h1_1.copyWith(
         color: AppColors.textPrimary,
       ),
+      titleMedium: AppTextStyles.font15W500h1_1.copyWith(
+        color: AppColors.textPrimary,
+      ),
       bodyLarge: AppTextStyles.font17W500h1_1.copyWith(
         color: AppColors.textSecondary,
       ),
+
       bodyMedium: AppTextStyles.font15W400h1_4.copyWith(
         color: AppColors.textSecondary,
       ),
     ),
     cardColor: AppColors.lightGrey,
-    
-
-    
+    iconButtonTheme: IconButtonThemeData(
+      style: ButtonStyle(
+        iconColor: WidgetStateProperty.all(AppColors.lightBlack),
+        backgroundColor: WidgetStateProperty.all(AppColors.lightGrey),
+        padding: WidgetStateProperty.all(EdgeInsets.all(12)),
+      ),
+    ),
   );
 }

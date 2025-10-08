@@ -1,42 +1,64 @@
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppe_app/core/network/network_info.dart';
 import 'package:shoppe_app/core/theme/cubit/theme_cubit.dart';
-import 'package:shoppe_app/features/welcome/data/datasources/welcome_local_datasource.dart';
-import 'package:shoppe_app/features/welcome/data/repositories/welcome_repository_impl.dart';
-import 'package:shoppe_app/features/welcome/domain/repositories/welcome_repository.dart';
-import 'package:shoppe_app/features/welcome/domain/usecases/complete_onboarding.dart';
-import 'package:shoppe_app/features/welcome/domain/usecases/get_onboarding_items.dart';
-import 'package:shoppe_app/features/welcome/presentation/cubit/welcome_cubit.dart';
+import 'package:shoppe_app/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:shoppe_app/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:shoppe_app/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:shoppe_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:shoppe_app/features/auth/domain/usecases/sign_in_with_facebook.dart';
+import 'package:shoppe_app/features/auth/domain/usecases/sign_in_with_google.dart';
+import 'package:shoppe_app/features/auth/domain/usecases/sign_in_with_twitter.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/auth_cubit.dart';
 
-final sl = GetIt.instance;
+final sl = GetIt.instance; // sl is short for service locator
 
 Future<void> init() async {
-  // Core - Theme
-  sl.registerLazySingleton(() => ThemeCubit());
+  // ===== Features =====
 
-  // Features - Welcome
-  // Cubit
+  // Auth Feature
+  // Cubits
   sl.registerFactory(
-    () => WelcomeCubit(getOnboardingItems: sl(), completeOnboarding: sl()),
+    () => AuthCubit(
+      signInWithGoogle: sl(),
+      signInWithFacebook: sl(),
+      signInWithTwitter: sl(),
+    ),
   );
 
-  // Use cases
-  sl.registerLazySingleton(() => GetOnboardingItems(sl()));
-  sl.registerLazySingleton(() => CompleteOnboarding(sl()));
+  // Use Cases
+  sl.registerLazySingleton(() => SignInWithGoogle(sl()));
+  sl.registerLazySingleton(() => SignInWithFacebook(sl()));
+  sl.registerLazySingleton(() => SignInWithTwitter(sl()));
 
   // Repository
-  sl.registerLazySingleton<WelcomeRepository>(
-    () => WelcomeRepositoryImpl(localDataSource: sl()),
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      remoteDataSource: sl(),
+      localDataSource: sl(),
+      networkInfo: sl(),
+    ),
   );
 
-  // Data sources
-  sl.registerLazySingleton<WelcomeLocalDataSource>(
-    () => WelcomeLocalDataSourceImpl(),
+  // Data Sources
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
-  // Core
+  // ===== Core =====
+
+  // Theme
+  sl.registerLazySingleton(() => ThemeCubit());
+
+  // Network
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
 
-  // External
-  // Add SharedPreferences, Dio, etc. here when needed
+  // ===== External =====
+
+  // SharedPreferences
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => sharedPreferences);
 }

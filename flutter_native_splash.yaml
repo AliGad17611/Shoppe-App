@@ -1,0 +1,12 @@
+flutter_native_splash:
+  color: "#9775FA"
+  image: assets/splash.png
+
+  # مهم لـ Android 12+
+  android_12:
+    image: assets/splash12.png
+    color: "#9775FA"
+
+  android: true
+  ios: true
+  web: false

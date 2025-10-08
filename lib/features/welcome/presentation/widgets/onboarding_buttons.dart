@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shoppe_app/core/helper/spacing.dart';
+import 'package:shoppe_app/core/routes/routes.dart';
 import 'package:shoppe_app/core/utils/app_colors.dart';
 import 'package:shoppe_app/core/utils/app_strings.dart';
 
@@ -30,7 +31,9 @@ class OnboardingButtons extends StatelessWidget {
           ],
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.authHome);
+          },
           child: Text(
             AppStrings.skip,
             style: Theme.of(context).textTheme.bodyLarge,
@@ -56,7 +59,9 @@ class OnboardingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, Routes.authHome);
+        },
         child: Container(
           height: 60.h,
           padding: EdgeInsets.symmetric(vertical: 10.h),
