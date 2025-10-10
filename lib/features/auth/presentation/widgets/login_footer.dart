@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shoppe_app/core/helper/spacing.dart';
+import 'package:shoppe_app/core/routes/routes.dart';
 import 'package:shoppe_app/core/utils/app_colors.dart';
 import 'package:shoppe_app/core/utils/app_strings.dart';
 
-class AuthFooter extends StatelessWidget {
-  final VoidCallback onSignInTap;
-
-  const AuthFooter({super.key, required this.onSignInTap});
-  
+class LoginFooter extends StatelessWidget {
+  const LoginFooter({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +13,17 @@ class AuthFooter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          AppStrings.alreadyHaveAccount,
+          AppStrings.dontHaveAccount,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
 
         horizontalSpace(5),
         GestureDetector(
-          onTap: onSignInTap,
+          onTap: () {
+            Navigator.pushNamed(context, Routes.signUp);
+          },
           child: Text(
-            AppStrings.signIn,
+            AppStrings.signUp,
             style: Theme.of(
               context,
             ).textTheme.titleMedium!.copyWith(color: AppColors.primary),
