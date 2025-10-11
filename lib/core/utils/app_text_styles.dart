@@ -28,6 +28,12 @@ class AppTextStyles {
     height: 1.1,
     letterSpacing: 0,
   );
+  static final TextStyle font15W500h1_1 = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w500,
+    height: 1.1,
+    letterSpacing: 0,
+  );
   static final TextStyle font15W400h1_4 = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w400,

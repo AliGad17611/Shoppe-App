@@ -17,9 +17,10 @@ class AppColors {
   static const Color lighterBlack = Color(0xFF222E34);
   static const Color lightestBlack = Color(0xFF29363D);
   static const Color secondaryGradientEnd = Color(0xFF7661C5);
+  static const Color green = Color(0xFF34C759);
+  static const Color red = Color(0xFFFF3B30);
 
   // text colors
   static const Color textPrimary = Color(0xFF1D1E20);
   static const Color textSecondary = Color(0xFF8F959E);
-
 }

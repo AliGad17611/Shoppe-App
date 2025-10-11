@@ -1,42 +1,51 @@
 import 'package:get_it/get_it.dart';
-import 'package:shoppe_app/core/network/network_info.dart';
+import 'package:shoppe_app/core/network/dio_factory.dart';
 import 'package:shoppe_app/core/theme/cubit/theme_cubit.dart';
-import 'package:shoppe_app/features/welcome/data/datasources/welcome_local_datasource.dart';
-import 'package:shoppe_app/features/welcome/data/repositories/welcome_repository_impl.dart';
-import 'package:shoppe_app/features/welcome/domain/repositories/welcome_repository.dart';
-import 'package:shoppe_app/features/welcome/domain/usecases/complete_onboarding.dart';
-import 'package:shoppe_app/features/welcome/domain/usecases/get_onboarding_items.dart';
-import 'package:shoppe_app/features/welcome/presentation/cubit/welcome_cubit.dart';
+import 'package:shoppe_app/features/auth/data/datasources/auth_api_service.dart';
+import 'package:shoppe_app/features/auth/data/repositories/auth_repository.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/register_cubit.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/reset_password_cubit.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/verification_cubit.dart';
+import 'package:shoppe_app/core/network/refresh_token_service.dart';
+import 'package:shoppe_app/core/network/refresh_token_api_service.dart';
+import 'package:flutter/material.dart';
 
-final sl = GetIt.instance;
+final sl = GetIt.instance; // sl is short for service locator
 
 Future<void> init() async {
-  // Core - Theme
+  // ===== Features =====
+
+  // Auth Feature
+  sl.registerFactory(() => LoginCubit(sl()));
+  sl.registerFactory(() => RegisterCubit(sl()));
+  sl.registerFactory(() => VerificationCubit(sl()));
+  sl.registerFactory(() => ForgotPasswordCubit(sl()));
+  sl.registerFactory(() => ResetPasswordCubit(sl()));
+
+  // Auth Repository
+  sl.registerLazySingleton(() => AuthRepository(sl()));
+
+  // Auth Api Service
+  sl.registerLazySingleton(() => AuthApiService(sl()));
+
+  // ===== Core =====
+
+  // Theme
   sl.registerLazySingleton(() => ThemeCubit());
 
-  // Features - Welcome
-  // Cubit
-  sl.registerFactory(
-    () => WelcomeCubit(getOnboardingItems: sl(), completeOnboarding: sl()),
-  );
+  // Refresh Token API Service
+  sl.registerLazySingleton(() => RefreshTokenApiService(sl()));
 
-  // Use cases
-  sl.registerLazySingleton(() => GetOnboardingItems(sl()));
-  sl.registerLazySingleton(() => CompleteOnboarding(sl()));
+  // Refresh Token Service
+  sl.registerLazySingleton(() => RefreshTokenService(sl()));
 
-  // Repository
-  sl.registerLazySingleton<WelcomeRepository>(
-    () => WelcomeRepositoryImpl(localDataSource: sl()),
-  );
+  // Global Navigator Key for navigation from services
+  sl.registerLazySingleton(() => GlobalKey<NavigatorState>());
 
-  // Data sources
-  sl.registerLazySingleton<WelcomeLocalDataSource>(
-    () => WelcomeLocalDataSourceImpl(),
-  );
+  // ===== External =====
 
-  // Core
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
-
-  // External
-  // Add SharedPreferences, Dio, etc. here when needed
+  // Dio Factory
+  sl.registerLazySingleton(() => DioFactory().dio);
 }
