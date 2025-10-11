@@ -1,15 +1,16 @@
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shoppe_app/core/network/network_info.dart';
+import 'package:shoppe_app/core/network/dio_factory.dart';
 import 'package:shoppe_app/core/theme/cubit/theme_cubit.dart';
-import 'package:shoppe_app/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:shoppe_app/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:shoppe_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:shoppe_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:shoppe_app/features/auth/domain/usecases/sign_in_with_facebook.dart';
-import 'package:shoppe_app/features/auth/domain/usecases/sign_in_with_google.dart';
-import 'package:shoppe_app/features/auth/domain/usecases/sign_in_with_twitter.dart';
-import 'package:shoppe_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:shoppe_app/features/auth/data/datasources/auth_api_service.dart';
+import 'package:shoppe_app/features/auth/data/repositories/auth_repository.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/forgot_password_cubit.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/register_cubit.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/reset_password_cubit.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/verification_cubit.dart';
+import 'package:shoppe_app/core/network/refresh_token_service.dart';
+import 'package:shoppe_app/core/network/refresh_token_api_service.dart';
+import 'package:flutter/material.dart';
 
 final sl = GetIt.instance; // sl is short for service locator
 
@@ -17,48 +18,34 @@ Future<void> init() async {
   // ===== Features =====
 
   // Auth Feature
-  // Cubits
-  sl.registerFactory(
-    () => AuthCubit(
-      signInWithGoogle: sl(),
-      signInWithFacebook: sl(),
-      signInWithTwitter: sl(),
-    ),
-  );
+  sl.registerFactory(() => LoginCubit(sl()));
+  sl.registerFactory(() => RegisterCubit(sl()));
+  sl.registerFactory(() => VerificationCubit(sl()));
+  sl.registerFactory(() => ForgotPasswordCubit(sl()));
+  sl.registerFactory(() => ResetPasswordCubit(sl()));
 
-  // Use Cases
-  sl.registerLazySingleton(() => SignInWithGoogle(sl()));
-  sl.registerLazySingleton(() => SignInWithFacebook(sl()));
-  sl.registerLazySingleton(() => SignInWithTwitter(sl()));
+  // Auth Repository
+  sl.registerLazySingleton(() => AuthRepository(sl()));
 
-  // Repository
-  sl.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
-      remoteDataSource: sl(),
-      localDataSource: sl(),
-      networkInfo: sl(),
-    ),
-  );
-
-  // Data Sources
-  sl.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(),
-  );
-  sl.registerLazySingleton<AuthLocalDataSource>(
-    () => AuthLocalDataSourceImpl(sharedPreferences: sl()),
-  );
+  // Auth Api Service
+  sl.registerLazySingleton(() => AuthApiService(sl()));
 
   // ===== Core =====
 
   // Theme
   sl.registerLazySingleton(() => ThemeCubit());
 
-  // Network
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
+  // Refresh Token API Service
+  sl.registerLazySingleton(() => RefreshTokenApiService(sl()));
+
+  // Refresh Token Service
+  sl.registerLazySingleton(() => RefreshTokenService(sl()));
+
+  // Global Navigator Key for navigation from services
+  sl.registerLazySingleton(() => GlobalKey<NavigatorState>());
 
   // ===== External =====
 
-  // SharedPreferences
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedPreferences);
+  // Dio Factory
+  sl.registerLazySingleton(() => DioFactory().dio);
 }

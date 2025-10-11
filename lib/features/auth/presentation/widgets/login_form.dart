@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppe_app/core/helper/spacing.dart';
+import 'package:shoppe_app/core/routes/routes.dart';
 import 'package:shoppe_app/core/utils/app_colors.dart';
 import 'package:shoppe_app/core/utils/app_strings.dart';
 import 'package:shoppe_app/core/widgets/primary_button.dart';
@@ -40,35 +41,41 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        EmailTextFormField(controller: _emailController),
-        verticalSpace(20),
-        PasswordTextFormField(controller: _passwordController),
-        verticalSpace(10),
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton(
-            onPressed: () {},
-            child: Text(
-              AppStrings.forgotPassword,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium!.copyWith(color: AppColors.primary),
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          EmailTextFormField(controller: _emailController),
+          verticalSpace(20),
+          PasswordTextFormField(controller: _passwordController),
+          verticalSpace(10),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () {
+                // Navigate to forgot password page
+                Navigator.pushNamed(context, Routes.forgotPassword);
+              },
+              child: Text(
+                AppStrings.forgotPassword,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(color: AppColors.primary),
+              ),
             ),
           ),
-        ),
-        Row(
-          children: [Text(AppStrings.rememberMe), Spacer(), SwitcherWidget()],
-        ),
+          Row(
+            children: [Text(AppStrings.rememberMe), Spacer(), SwitcherWidget()],
+          ),
 
-        verticalSpace(30),
-        PrimaryButton(text: AppStrings.signIn, onTap: _handleLogin),
-        verticalSpace(15),
-        TermsAndConditionsText(),
-        verticalSpace(30),
-        LoginFooter(),
-      ],
+          verticalSpace(30),
+          PrimaryButton(text: AppStrings.signIn, onTap: _handleLogin),
+          verticalSpace(15),
+          TermsAndConditionsText(),
+          verticalSpace(30),
+          LoginFooter(),
+        ],
+      ),
     );
   }
 }

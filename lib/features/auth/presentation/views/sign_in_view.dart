@@ -35,7 +35,7 @@ class SignInViewBody extends StatelessWidget {
               // Show success message
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Welcome back, ${state.user.email}!'),
+                  content: Text('Welcome back!'),
                   backgroundColor: Colors.green,
                 ),
               );
@@ -44,7 +44,7 @@ class SignInViewBody extends StatelessWidget {
               // Show error message
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state.message),
+                  content: Text(state.apiErrorModel.message),
                   backgroundColor: Colors.red,
                 ),
               );

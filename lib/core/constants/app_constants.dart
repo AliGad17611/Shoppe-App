@@ -5,23 +5,32 @@ part 'pagination_constants.dart';
 
 class AppConstants {
   // API
-  static String get baseUrl => ApiConstants.baseUrl;
-  static String get apiVersion => ApiConstants.apiVersion;
-  static int get connectionTimeout => ApiConstants.connectionTimeout;
-  static int get receiveTimeout => ApiConstants.receiveTimeout;
-
+  static const String baseUrl = ApiConstants.baseUrl;
+  static const int connectionTimeout = ApiConstants.connectionTimeout;
+  static const int receiveTimeout = ApiConstants.receiveTimeout;
+  static const int sendTimeout = ApiConstants.sendTimeout;
+  static const String authorization = ApiConstants.authorization;
   // API Endpoints
-  static String get loginEndpoint => ApiConstants.loginEndpoint;
-  static String get registerEndpoint => ApiConstants.registerEndpoint;
+  static const String loginEndpoint = ApiConstants.loginEndpoint;
+  static const String registerEndpoint = ApiConstants.registerEndpoint;
+  static const String verifyCodeEndpoint = ApiConstants.verifyCodeEndpoint;
+  static const String resendCodeEndpoint = ApiConstants.resendCodeEndpoint;
+  static const String resetPasswordEndpoint =
+      ApiConstants.resetPasswordEndpoint;
+  static const String refreshTokenEndpoint = ApiConstants.refreshTokenEndpoint;
 
   // Storage
-  static String get tokenKey => StorageConstants.tokenKey;
-  static String get userKey => StorageConstants.userKey;
+  static const String accessToken = StorageConstants.accessToken;
+  static const String refreshToken = StorageConstants.refreshToken;
+  static const String userId = StorageConstants.userId;
+  static const String email = StorageConstants.email;
+  static const String username = StorageConstants.username;
+  static const String onboardingKey = StorageConstants.onboardingKey;
 
   // UI
-  static double get defaultPadding => UIConstants.defaultPadding;
-  static double get defaultBorderRadius => UIConstants.defaultBorderRadius;
+  static const double defaultPadding = UIConstants.defaultPadding;
+  static const double defaultBorderRadius = UIConstants.defaultBorderRadius;
 
   // Pagination
-  static int get pageSize => PaginationConstants.pageSize;
+  static const int pageSize = PaginationConstants.pageSize;
 }
