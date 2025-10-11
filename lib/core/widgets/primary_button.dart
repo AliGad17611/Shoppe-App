@@ -6,12 +6,14 @@ class PrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
   final Color? textColor;
+  final bool isLoading;
 
   const PrimaryButton({
     super.key,
     required this.text,
     required this.onTap,
     this.textColor,
+    this.isLoading = false,
   });
 
   @override
@@ -26,12 +28,14 @@ class PrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: Center(
-          child: Text(
-            text,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge!.copyWith(color: AppColors.white),
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator()
+              : Text(
+                  text,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge!.copyWith(color: AppColors.white),
+                ),
         ),
       ),
     );

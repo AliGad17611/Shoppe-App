@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shoppe_app/core/cache/cache_helper.dart';
+import 'package:shoppe_app/core/constants/app_constants.dart';
 import 'package:shoppe_app/core/helper/spacing.dart';
 import 'package:shoppe_app/core/routes/routes.dart';
 import 'package:shoppe_app/core/utils/app_colors.dart';
@@ -31,7 +33,12 @@ class OnboardingButtons extends StatelessWidget {
           ],
         ),
         TextButton(
-          onPressed: () {
+          onPressed: () async {
+            // Mark onboarding as completed
+            await CacheHelper.set(
+              key: AppConstants.onboardingKey,
+              value: true,
+            );
             Navigator.pushNamed(context, Routes.authHome);
           },
           child: Text(
@@ -59,7 +66,12 @@ class OnboardingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
+          // Mark onboarding as completed
+          await CacheHelper.set(
+            key: AppConstants.onboardingKey,
+            value: true,
+          );
           Navigator.pushNamed(context, Routes.authHome);
         },
         child: Container(

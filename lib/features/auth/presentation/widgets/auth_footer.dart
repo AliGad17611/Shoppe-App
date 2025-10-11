@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shoppe_app/core/helper/spacing.dart';
+import 'package:shoppe_app/core/utils/app_colors.dart';
 import 'package:shoppe_app/core/utils/app_strings.dart';
 
 class AuthFooter extends StatelessWidget {
   final VoidCallback onSignInTap;
 
   const AuthFooter({super.key, required this.onSignInTap});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,9 @@ class AuthFooter extends StatelessWidget {
           onTap: onSignInTap,
           child: Text(
             AppStrings.signIn,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium!.copyWith(color: AppColors.primary),
           ),
         ),
       ],
