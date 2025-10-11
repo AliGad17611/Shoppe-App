@@ -1,6 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:shoppe_app/core/cache/cache_helper.dart';
+import 'package:shoppe_app/core/constants/app_constants.dart';
 import 'package:shoppe_app/core/errors/api_error_handler.dart';
 import 'package:shoppe_app/core/errors/api_error_model.dart';
+import 'package:shoppe_app/core/network/decode_token.dart';
 import 'package:shoppe_app/features/auth/data/datasources/auth_api_service.dart';
 import 'package:shoppe_app/features/auth/data/models/login_request_model.dart';
 import 'package:shoppe_app/features/auth/data/models/login_response_model.dart';
@@ -20,6 +23,10 @@ class AuthRepository {
   ) async {
     try {
       final response = await _authApiService.login(request);
+      // cache the response
+      CacheHelper.setSecureData(key: AppConstants.accessToken, value: response.accessToken);
+      CacheHelper.setSecureData(key: AppConstants.refreshToken, value: response.refreshToken);
+      DecodedToken().saveDecodedToken(response.accessToken);
       return Right(response);
     } catch (e) {
       return Left(ApiErrorHandler.handle(e));

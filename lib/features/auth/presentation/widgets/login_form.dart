@@ -6,6 +6,7 @@ import 'package:shoppe_app/core/utils/app_colors.dart';
 import 'package:shoppe_app/core/utils/app_strings.dart';
 import 'package:shoppe_app/core/widgets/primary_button.dart';
 import 'package:shoppe_app/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:shoppe_app/features/auth/presentation/cubit/login_state.dart';
 import 'package:shoppe_app/features/auth/presentation/widgets/email_text_form_field.dart';
 import 'package:shoppe_app/features/auth/presentation/widgets/login_footer.dart';
 import 'package:shoppe_app/features/auth/presentation/widgets/password_text_form_field.dart';
@@ -69,7 +70,15 @@ class _LoginFormState extends State<LoginForm> {
           ),
 
           verticalSpace(30),
-          PrimaryButton(text: AppStrings.signIn, onTap: _handleLogin),
+          BlocBuilder<LoginCubit, LoginState>(
+            builder: (context, state) {
+              return PrimaryButton(
+                text: AppStrings.signIn,
+                isLoading: state is LoginLoading,
+                onTap: _handleLogin,
+              );
+            },
+          ),
           verticalSpace(15),
           TermsAndConditionsText(),
           verticalSpace(30),
